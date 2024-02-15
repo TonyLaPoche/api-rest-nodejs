@@ -44,7 +44,7 @@ export const getExemple = async (req: Request, res: Response, next: NextFunction
         }
         res.json(Exemple);
     } catch (error) {
-        next(error);
+        next(new InternalServerError('Internal Server Error'));
     }
 };
 
@@ -61,7 +61,7 @@ export const updateExemple = async (req: Request, res: Response, next: NextFunct
         }
         res.json(updatedExemple);
     } catch (error: unknown) {
-        next(error);
+        next(new InternalServerError('Internal Server Error'));
     }
 };
 
@@ -79,7 +79,7 @@ export const deleteExemple = async (req: Request, res: Response, next: NextFunct
         }
         res.status(200).send(`Exemple with id ${req.params.id} has been deleted`);
     } catch (error: unknown) {
-        next(error);
+        next(new InternalServerError('Internal Server Error'));
     }
 };
 
