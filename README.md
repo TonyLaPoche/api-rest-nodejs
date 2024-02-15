@@ -1,5 +1,8 @@
 # Exemple API REST
 
+---
+![https://forthebadge.com](https://forthebadge.com/images/badges/powered-by-coffee.svg)
+
 Une API REST simple pour gérer des exemples d'entités avec un CRUD complet, construite avec Node.js, Express, MongoDB et TypeScript.
 
 ## Fonctionnalités
@@ -107,6 +110,13 @@ Voici comment consommer l'API :
 
 Les contributions sont les bienvenues ! Pour contribuer, veuillez forker le dépôt, créer une branche pour votre fonctionnalité ou correction, puis soumettre une pull request.
 
+![https://forthebadge.com](
+https://forthebadge.com/images/badges/not-a-bug-a-feature.svg)
+
 ### Licence
 
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+
+![https://forthebadge.com](https://forthebadge.com/images/badges/powered-by-electricity.svg)
+![https://forthebadge.com](https://forthebadge.com/images/badges/built-by-developers.svg)
+![https://forthebadge.com](https://forthebadge.com/images/badges/made-with-typescript.svg)
