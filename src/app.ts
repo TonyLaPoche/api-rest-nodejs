@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { router as indexRouter } from './routes/index';
 import { connectDB } from './config/db';
-
+import { errorHandler } from './middleware/errorHandler';
 dotenv.config();
 
 const app = express();
@@ -17,6 +17,7 @@ app.use('/', indexRouter);
 (async () => {
     try {
       await connectDB();
+      app.use(errorHandler);
       app.listen(port, () => {
         console.log(`Server is running at http://localhost:${port}`);
       });
