@@ -38,7 +38,6 @@ export const getExemple = async (
     const Exemple = await ExempleService.findById(id);
     if (!Exemple) {
       next(new NoExempleFoundError(id));
-      console.log("here");
       return;
     }
     res.json(Exemple);
