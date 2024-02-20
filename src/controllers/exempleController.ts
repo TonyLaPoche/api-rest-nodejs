@@ -1,11 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { ExempleService } from "../services/exempleService";
 import { NoExempleFoundError } from "../utils/ApiError";
-import {
-  ExempleCreationSchema,
-  ExempleUpdateSchema,
-} from "../DTO/ExempleBodySchema";
+import { ExempleCreationSchema } from "../DTO/ExempleBodySchema";
 import { exempleIdQuery } from "../DTO/ExempleIdQuery";
+import { ExempleUpdateSchema } from "../DTO/ExempleUpdateSchema";
 
 export const createExemple = async (
   req: Request,
