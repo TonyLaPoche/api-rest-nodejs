@@ -34,8 +34,10 @@ Clonez ce dépôt sur votre machine locale :
 Installez les dépendances du projet :
 
 ```bash
-    npm install
+    yarn install
 ```
+
+ou
 
 ```bash
     npm install
@@ -55,14 +57,14 @@ Créez un fichier .env à la racine du projet et ajoutez les configurations néc
 Pour lancer l'API en mode développement, exécutez :
 
 ```bash
-    npm run dev
+    yarn dev
 ```
 
 Pour construire et exécuter en production :
 
 ```bash
-    npm run build
-    npm start
+    yarn build
+    yarn start
 ```
 
 ## Utilisation
