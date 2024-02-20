@@ -1,6 +1,6 @@
-import { SafeParseError, typeToFlattenedError } from "zod";
+import { typeToFlattenedError } from "zod";
 
-class ApiError extends Error {
+export class ApiError extends Error {
   statusCode: number;
 
   constructor(statusCode: number, message: string | any) {
@@ -18,7 +18,7 @@ export class NotFoundError extends ApiError {
 }
 
 export class BadRequestError extends ApiError {
-  constructor(message: string | typeToFlattenedError<{}> ) {
+  constructor(message: string | typeToFlattenedError<{}>) {
     super(400, message);
   }
 }
