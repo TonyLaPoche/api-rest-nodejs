@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import {
   ExempleCreationSchema,
   ExempleUpdateSchema,
-} from "../models/ExempleBodySchema";
+} from "../DTO/ExempleBodySchema";
 
 export const createExemple = async (
   req: Request,
