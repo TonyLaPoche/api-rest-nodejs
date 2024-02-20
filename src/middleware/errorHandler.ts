@@ -14,7 +14,7 @@ export const errorHandler = (
     return;
   }
   if (err instanceof ApiError) {
-    res.status(err.statusCode).json({ name: err.name, err: err.message });
+    res.status(err.statusCode).json(err);
     return;
   }
 
