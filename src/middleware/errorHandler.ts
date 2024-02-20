@@ -8,7 +8,6 @@ export const errorHandler = (
   res: Response,
   next: NextFunction,
 ) => {
-  console.log(err);
   if (err instanceof ZodError) {
     res.status(400).json({ error: err.flatten() });
     return;
@@ -17,6 +16,6 @@ export const errorHandler = (
     res.status(err.statusCode).json(err);
     return;
   }
-
   res.status(500).json({ error: "Internal Server Error" });
+  console.log(err);
 };
