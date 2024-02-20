@@ -7,7 +7,6 @@ import {
   deleteExemple,
   deleteAllExemple,
 } from "../controllers/exempleController";
-import { setTestError } from "../controllers/testErrorController";
 
 export const router = Router();
 
@@ -17,5 +16,3 @@ router.get("/exemples/:id", getExemple);
 router.patch("/exemples/:id", updateExemple);
 router.delete("/exemples/:id", deleteExemple);
 router.delete("/exemples", deleteAllExemple);
-
-router.get("/error", setTestError);
