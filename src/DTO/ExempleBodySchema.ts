@@ -7,6 +7,8 @@ export const ExempleCreationSchema = z
   })
   .strict();
 
+export type ExempleData = z.infer<typeof ExempleCreationSchema>;
+
 export const ExempleUpdateSchema = z
   .object({
     name: z.string().min(3).max(30).optional(),
@@ -14,3 +16,5 @@ export const ExempleUpdateSchema = z
   })
   .partial()
   .strict();
+
+export type UpdateExempleData = z.infer<typeof ExempleUpdateSchema>;

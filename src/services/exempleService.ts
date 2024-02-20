@@ -1,5 +1,5 @@
+import { ExempleData, UpdateExempleData } from "../DTO/ExempleBodySchema";
 import { ExempleModel } from "../models/ExempleModel";
-import { ExempleData, UpdateExempleData } from "../types/exempleTypes";
 
 export const ExempleService = {
   create: async (data: ExempleData) => {
