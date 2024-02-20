@@ -1,17 +1,22 @@
 import { Request, Response, NextFunction } from "express";
+import { ZodError } from "zod";
+import { ApiError } from "../utils/ApiError";
 
 export const errorHandler = (
-  err: any,
+  err: unknown,
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
-  console.error(err.stack);
-  const statusCode = err.statusCode || 500;
-  res
-    .status(statusCode)
-    .send({
-      status: `code ${statusCode}`,
-      message: err.message || "Internal Server Error",
-    });
+  console.log(err);
+  if (err instanceof ZodError) {
+    res.status(400).json({ error: err.flatten() });
+    return;
+  }
+  if (err instanceof ApiError) {
+    res.status(err.statusCode).json({ name: err.name, err: err.message });
+    return;
+  }
+
+  res.status(500).json({ error: "Internal Server Error" });
 };
