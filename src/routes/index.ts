@@ -14,7 +14,7 @@ export const router = Router();
 router.post("/exemples", createExemple);
 router.get("/exemples", getExemples);
 router.get("/exemples/:id", getExemple);
-router.put("/exemples/:id", updateExemple);
+router.patch("/exemples/:id", updateExemple);
 router.delete("/exemples/:id", deleteExemple);
 router.delete("/exemples", deleteAllExemple);
 
