@@ -1,15 +1,11 @@
 import { NextFunction, Request, Response } from "express";
 import { ExempleService } from "../services/exempleService";
-import {
-  BadRequestError,
-  InternalServerError,
-  NotFoundError,
-} from "../utils/ApiError";
-import mongoose from "mongoose";
+import { NoExempleFoundError } from "../utils/ApiError";
 import {
   ExempleCreationSchema,
   ExempleUpdateSchema,
 } from "../DTO/ExempleBodySchema";
+import { exempleIdQuery } from "../DTO/ExempleIdQuery";
 
 export const createExemple = async (
   req: Request,
@@ -31,10 +27,6 @@ export const getExemples = async (
   next: NextFunction,
 ) => {
   const Exemples = await ExempleService.findAll();
-  if (Exemples.length === 0) {
-    next(new NotFoundError("No exemple found"));
-    return;
-  }
   res.json(Exemples);
 };
 
@@ -44,20 +36,16 @@ export const getExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      next(new BadRequestError("Invalid format id"));
-      return;
-    }
-    const Exemple = await ExempleService.findById(req.params.id);
+    const { id } = exempleIdQuery.parse(req.params);
+    const Exemple = await ExempleService.findById(id);
     if (!Exemple) {
-      next(new NotFoundError("Exemple not found"));
+      next(new NoExempleFoundError(id));
+      console.log("here");
       return;
     }
     res.json(Exemple);
   } catch (error) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
   }
 };
 
@@ -67,19 +55,11 @@ export const updateExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      next(new BadRequestError("Invalid format id"));
-      return;
-    }
+    const { id } = exempleIdQuery.parse(req.params);
     const parsedBody = ExempleUpdateSchema.parse(req.body);
-    const updatedExemple = await ExempleService.update(
-      req.params.id,
-      parsedBody,
-    );
+    const updatedExemple = await ExempleService.update(id, parsedBody);
     if (!updatedExemple) {
-      next(new NotFoundError("Exemple not found"));
+      next(new NoExempleFoundError(id));
       return;
     }
     res.json(updatedExemple);
@@ -94,20 +74,15 @@ export const deleteExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      next(new BadRequestError("Invalid format id"));
-      return;
-    }
-    const { deletedCount } = await ExempleService.delete(req.params.id);
+    const { id } = exempleIdQuery.parse(req.params);
+    const { deletedCount } = await ExempleService.delete(id);
     if (deletedCount === 0) {
-      next(new NotFoundError("Exemple not found"));
+      next(new NoExempleFoundError(id));
       return;
     }
-    res.status(200).send(`Exemple with id ${req.params.id} has been deleted`);
+    res.status(200).send(`Exemple with id ${id} has been deleted`);
   } catch (error: unknown) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
   }
 };
 
@@ -118,12 +93,9 @@ export const deleteAllExemple = async (
 ) => {
   try {
     const { deletedCount } = await ExempleService.deleteAll();
-    if (deletedCount === 0) {
-      next(new NotFoundError("No exemple to delete"));
-      return;
-    }
+
     res.status(200).send(`${deletedCount} has been deleted successfully`);
   } catch (error: unknown) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
   }
 };
