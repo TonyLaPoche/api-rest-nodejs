@@ -5,6 +5,7 @@ import {
   getExemple,
   updateExemple,
   deleteExemple,
+  deleteAllExemple,
 } from "../controllers/exempleController";
 import { setTestError } from "../controllers/testErrorController";
 
@@ -15,5 +16,6 @@ router.get("/exemples", getExemples);
 router.get("/exemples/:id", getExemple);
 router.put("/exemples/:id", updateExemple);
 router.delete("/exemples/:id", deleteExemple);
+router.delete("/exemples", deleteAllExemple);
 
 router.get("/error", setTestError);

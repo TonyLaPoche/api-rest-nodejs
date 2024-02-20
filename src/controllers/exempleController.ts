@@ -14,17 +14,11 @@ export const createExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const Exemple = await ExempleService.create(req.body);
-    res.status(201).json(Exemple);
+    
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      if (error.name === "ValidationError") {
-        next(new BadRequestError(error.message));
-      }
-    } else {
-      next(new InternalServerError("Internal Server Error"));
-    }
+  
   }
+
 };
 
 export const getExemples = async (
@@ -32,17 +26,11 @@ export const getExemples = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const Exemples = await ExempleService.findAll();
-    if (Exemples.length === 0) {
-      next(
-        new NotFoundError("No Exemples found \n Please create a new Exemple!"),
-      );
-    }
-    res.json(Exemples);
-  } catch (error) {
-    next(new InternalServerError("Internal Server Error"));
+  const Exemples = await ExempleService.findAll();
+  if (Exemples.length === 0) {
+    next(new NotFoundError("No exemple found"))
   }
+  res.json(Exemples);
 };
 
 export const getExemple = async (
@@ -104,6 +92,25 @@ export const deleteExemple = async (
     }
     res.status(200).send(`Exemple with id ${req.params.id} has been deleted`);
   } catch (error: unknown) {
+    next(new InternalServerError("Internal Server Error"));
+  }
+};
+
+export const deleteAllExemple = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { deletedCount } = await ExempleService.deleteAll();
+    if (deletedCount === 0) {
+      throw new NotFoundError("No exemple to delete");
+    }
+    res.status(200).send(`${deletedCount} has been deleted successfully`);
+  } catch (error: unknown) {
+    if (error instanceof NotFoundError) {
+      next(error);
+    }
     next(new InternalServerError("Internal Server Error"));
   }
 };

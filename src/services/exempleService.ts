@@ -18,4 +18,7 @@ export const ExempleService = {
   delete: async (id: string) => {
     return ExempleModel.deleteOne({ _id: id });
   },
+  deleteAll: async () => {
+    return ExempleModel.deleteMany();
+  },
 };

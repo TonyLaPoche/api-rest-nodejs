@@ -12,7 +12,6 @@ export const errorHandler = (
     .status(statusCode)
     .send({
       status: `code ${statusCode}`,
-      type: err.name,
-      message: err.message,
+      message: err.message || "Internal Server Error",
     });
 };

@@ -1,7 +1,9 @@
+import { SafeParseError, typeToFlattenedError } from "zod";
+
 class ApiError extends Error {
   statusCode: number;
 
-  constructor(statusCode: number, message: string) {
+  constructor(statusCode: number, message: string | any) {
     super(message);
     this.statusCode = statusCode;
     this.name = this.constructor.name;
@@ -16,7 +18,7 @@ export class NotFoundError extends ApiError {
 }
 
 export class BadRequestError extends ApiError {
-  constructor(message: string = "Bad Request") {
+  constructor(message: string | typeToFlattenedError<{}> ) {
     super(400, message);
   }
 }
