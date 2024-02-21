@@ -60,6 +60,10 @@ Pour lancer l'API en mode développement, exécutez :
     yarn dev
 ```
 
+```bash
+    npm run dev
+```
+
 Pour construire et exécuter en production :
 
 ```bash

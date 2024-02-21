@@ -1,7 +1,7 @@
 {
   "name": "api-rest-nodejs",
   "version": "0.0.1",
-  "description": "Base d'une API REST, avec un crud complet. Entité basé sur la génération de personnage de JDR",
+  "description": "Base d'une API REST, avec un crud complet.",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
