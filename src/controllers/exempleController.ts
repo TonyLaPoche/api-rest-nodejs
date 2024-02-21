@@ -1,12 +1,9 @@
-// src/controllers/ExempleController.ts
 import { NextFunction, Request, Response } from "express";
 import { ExempleService } from "../services/exempleService";
-import {
-  BadRequestError,
-  InternalServerError,
-  NotFoundError,
-} from "../utils/ApiError";
-import mongoose from "mongoose";
+import { NoExempleFoundError } from "../utils/ApiError";
+import { ExempleCreationSchema } from "../DTO/ExempleBodySchema";
+import { exempleIdQuery } from "../DTO/ExempleIdQuery";
+import { ExempleUpdateSchema } from "../DTO/ExempleUpdateSchema";
 
 export const createExemple = async (
   req: Request,
@@ -14,16 +11,11 @@ export const createExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const Exemple = await ExempleService.create(req.body);
+    const resultat = ExempleCreationSchema.parse(req.body);
+    const Exemple = await ExempleService.create(resultat);
     res.status(201).json(Exemple);
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      if (error.name === "ValidationError") {
-        next(new BadRequestError(error.message));
-      }
-    } else {
-      next(new InternalServerError("Internal Server Error"));
-    }
+    next(error);
   }
 };
 
@@ -32,17 +24,8 @@ export const getExemples = async (
   res: Response,
   next: NextFunction,
 ) => {
-  try {
-    const Exemples = await ExempleService.findAll();
-    if (Exemples.length === 0) {
-      next(
-        new NotFoundError("No Exemples found \n Please create a new Exemple!"),
-      );
-    }
-    res.json(Exemples);
-  } catch (error) {
-    next(new InternalServerError("Internal Server Error"));
-  }
+  const Exemples = await ExempleService.findAll();
+  res.json(Exemples);
 };
 
 export const getExemple = async (
@@ -51,18 +34,15 @@ export const getExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      throw new BadRequestError("Invalid format id");
-    }
-    const Exemple = await ExempleService.findById(req.params.id);
+    const { id } = exempleIdQuery.parse(req.params);
+    const Exemple = await ExempleService.findById(id);
     if (!Exemple) {
-      throw new NotFoundError("Exemple not found");
+      next(new NoExempleFoundError(id));
+      return;
     }
     res.json(Exemple);
   } catch (error) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
   }
 };
 
@@ -72,18 +52,16 @@ export const updateExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      throw new BadRequestError("Invalid format id");
-    }
-    const updatedExemple = await ExempleService.update(req.params.id, req.body);
+    const { id } = exempleIdQuery.parse(req.params);
+    const parsedBody = ExempleUpdateSchema.parse(req.body);
+    const updatedExemple = await ExempleService.update(id, parsedBody);
     if (!updatedExemple) {
-      throw new NotFoundError("Exemple not found");
+      next(new NoExempleFoundError(id));
+      return;
     }
     res.json(updatedExemple);
   } catch (error: unknown) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
   }
 };
 
@@ -93,17 +71,28 @@ export const deleteExemple = async (
   next: NextFunction,
 ) => {
   try {
-    const id = req.params.id;
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-      throw new BadRequestError("Invalid format id");
-    }
-    const { deletedCount } = await ExempleService.delete(req.params.id);
+    const { id } = exempleIdQuery.parse(req.params);
+    const { deletedCount } = await ExempleService.delete(id);
     if (deletedCount === 0) {
-      throw new NotFoundError("Exemple not found");
+      next(new NoExempleFoundError(id));
+      return;
     }
-    res.status(200).send(`Exemple with id ${req.params.id} has been deleted`);
+    res.status(200).send(`Exemple with id ${id} has been deleted`);
   } catch (error: unknown) {
-    next(new InternalServerError("Internal Server Error"));
+    next(error);
+  }
+};
+
+export const deleteAllExemple = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { deletedCount } = await ExempleService.deleteAll();
+
+    res.status(200).send(`${deletedCount} has been deleted successfully`);
+  } catch (error: unknown) {
+    next(error);
   }
 };

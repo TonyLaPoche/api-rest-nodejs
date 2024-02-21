@@ -1,5 +1,6 @@
+import { ExempleData } from "../DTO/ExempleBodySchema";
+import { UpdateExempleData } from "../DTO/ExempleUpdateSchema";
 import { ExempleModel } from "../models/ExempleModel";
-import { ExempleData } from "../types/exempleTypes";
 
 export const ExempleService = {
   create: async (data: ExempleData) => {
@@ -12,10 +13,13 @@ export const ExempleService = {
   findById: async (id: string) => {
     return ExempleModel.findById(id);
   },
-  update: async (id: string, data: ExempleData) => {
+  update: async (id: string, data: UpdateExempleData) => {
     return ExempleModel.findByIdAndUpdate(id, data, { new: true });
   },
   delete: async (id: string) => {
     return ExempleModel.deleteOne({ _id: id });
+  },
+  deleteAll: async () => {
+    return ExempleModel.deleteMany();
   },
 };

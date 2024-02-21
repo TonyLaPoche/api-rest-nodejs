@@ -1,27 +1,62 @@
-class ApiError extends Error {
+class ErrorResponseDTO {
+  name: string;
+  message: string;
+  uri?: string;
   statusCode: number;
-
-  constructor(statusCode: number, message: string) {
-    super(message);
+  constructor(name: string, message: string, statusCode: number, uri: string) {
+    this.name = name;
+    this.message = message;
+    this.uri = uri;
     this.statusCode = statusCode;
-    this.name = this.constructor.name;
-    Error.captureStackTrace(this, this.constructor);
+  }
+}
+
+export class ApiError extends Error {
+  statusCode: number;
+  uri?: string;
+  errorMessage: string;
+  constructor(payload: ErrorResponseDTO) {
+    super(payload.message);
+    this.name = payload.name;
+    this.statusCode = payload.statusCode;
+    this.errorMessage = payload.message;
+    this.uri = payload.uri;
+    Error.captureStackTrace(this);
   }
 }
 
 export class NotFoundError extends ApiError {
-  constructor(message: string = "Not Found") {
-    super(404, message);
+  constructor(message: ErrorResponseDTO) {
+    super(message);
+  }
+}
+
+export class NoExempleFoundError extends ApiError {
+  constructor(id: string) {
+    super({
+      statusCode: 404,
+      name: "NoExempleFoundError",
+      message: `Exemple with id : ${id} not found`,
+      uri: `/exemples/${id}`,
+    });
   }
 }
 
 export class BadRequestError extends ApiError {
-  constructor(message: string = "Bad Request") {
-    super(400, message);
+  constructor() {
+    super({
+      statusCode: 400,
+      name: "BadRequestError",
+      message: "Bad Request",
+    });
   }
 }
 export class InternalServerError extends ApiError {
-  constructor(message: string = "Internal Server Error") {
-    super(500, message);
+  constructor() {
+    super({
+      statusCode: 500,
+      name: "InternalServerError",
+      message: "Internal Server Error",
+    });
   }
 }
