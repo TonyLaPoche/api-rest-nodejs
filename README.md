@@ -152,7 +152,7 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 
 #### mot de la fin | remerciement
 
-Merci, énormément à mes mentors et amis qui me soutiennes et qui ont eu un regarde critique et constructif sur mon travail. Ce sont de réel source d'inspiration et de motivation pour ma carrière de développeur.  
+Je suis extrêmement reconnaissant envers mes mentors, qui m'ont soutenu et qui ont eu un regard critique et constructif sur mon travail. Ces personnes sont une véritable source d'inspiration et de motivation pour mon travail en tant que développeur.
 
 - Alex : https://www.linkedin.com/in/alexandre-caldato/
 - Cyril : https://www.linkedin.com/in/cchapon/
