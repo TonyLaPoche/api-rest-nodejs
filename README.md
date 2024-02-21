@@ -157,3 +157,4 @@ Merci, énormément à mes mentors et amis qui me soutiennes et qui ont eu un re
 - Alex : https://www.linkedin.com/in/alexandre-caldato/
 - Cyril : https://www.linkedin.com/in/cchapon/
 - Cindy : https://www.linkedin.com/in/cindy-bajoni/
+- Alann : https://www.linkedin.com/in/alann-sapone/
