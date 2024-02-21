@@ -1,4 +1,5 @@
-import { ExempleData, UpdateExempleData } from "../DTO/ExempleBodySchema";
+import { ExempleData } from "../DTO/ExempleBodySchema";
+import { UpdateExempleData } from "../DTO/ExempleUpdateSchema";
 import { ExempleModel } from "../models/ExempleModel";
 
 export const ExempleService = {
