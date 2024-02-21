@@ -6,20 +6,37 @@
 
 Une API REST simple pour gérer des exemples d'entités avec un CRUD complet, construite avec Node.js, Express, MongoDB et TypeScript.
 
+## L'entité
+
+L'entité générable/manipulable sur cette api est un simple objet contenant 2 clés (name, description).
+
+### Schéma (exemple)
+
+- name : `string (min: 3 & max: 30 length)`, `non nullable`, `obligatoire`
+- description : `string (max: 300 length)`, `nullable`,  `facultatif`
+
+```json
+    {
+        "name":"Nom d'un exemple",
+        "description": "Description, lorem ipsum dolor sit amet..."
+    }
+```
+
 ## Fonctionnalités
 
-- Création d'un exemple
-- Récupération de tous les exemples
-- Récupération d'un exemple par ID
-- Mise à jour d'un exemple par ID
-- Suppression d'un exemple par ID
+- Création d'un exemple (**POST**)
+- Récupération de tous les exemples (**GET**)
+- Récupération d'un exemple par son ID (**GET**)
+- Mise à jour d'un exemple par son ID (**PATCH**)
+- Suppression d'un exemple par son ID (**DELETE**)
+- Suppression de la liste complète des exemples (purge) (**DELETE**)
 
 ## Prérequis
 
 Avant de commencer, assurez-vous d'avoir installé :
 
-- Node.js (version 12.x ou plus récente)
-- npm (inclus avec Node.js)
+- Node.js (version 12.x ou supérieur)
+- npm (inclus avec Node.js) | yarn
 - MongoDB (local ou distant)
 
 ## Installation
@@ -75,6 +92,11 @@ Pour construire et exécuter en production :
 
 Voici comment consommer l'API :
 
+*à titre personnel j'ai effectués mes essaies via le logiciel **POSTMAN**.  
+Les exemples ci-dessous font référence à un traitement en local avec le port 3000. `localhost:3000/[ENDPOINT]`*
+
+- Retrouver la liste des Endpoints dans le fichier `src/routes/index.ts`
+
 ### Créer un exemple
 
 ```bash
@@ -100,7 +122,7 @@ Voici comment consommer l'API :
 ### Mettre à jour un exemple par ID
 
 ```bash
-    PUT /examples/:id
+    PATCH /examples/:id
     {
     "name": "Nouveau nom",
     "description": "Nouvelle description"
@@ -126,3 +148,12 @@ Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
 ![https://forthebadge.com](https://forthebadge.com/images/badges/powered-by-electricity.svg)
 ![https://forthebadge.com](https://forthebadge.com/images/badges/built-by-developers.svg)
 ![https://forthebadge.com](https://forthebadge.com/images/badges/made-with-typescript.svg)
+
+
+#### mot de la fin | remerciement
+
+Merci, énormément à mes mentors et amis qui me soutiennes et qui ont eu un regarde critique et constructif sur mon travail. Ce sont de réel source d'inspiration et de motivation pour ma carrière de développeur.  
+
+- Alex : https://www.linkedin.com/in/alexandre-caldato/
+- Cyril : https://www.linkedin.com/in/cchapon/
+- Cindy : https://www.linkedin.com/in/cindy-bajoni/
